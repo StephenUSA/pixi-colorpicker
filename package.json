@@ -1,0 +1,28 @@
+{
+  "name": "color-picker-pixi",
+  "version": "1.0.0",
+  "description": "PIXIJS based color picker",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx webpack build",
+    "start": "npm run build && node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stefan Ungureanu",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "copy-webpack-plugin": "^12.0.2",
+    "express": "^4.19.2",
+    "html-webpack-plugin": "^5.6.0",
+    "nodemon": "^3.1.4",
+    "pixi.js": "^8.2.5",
+    "terser-webpack-plugin": "^5.3.10",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  }
+}
