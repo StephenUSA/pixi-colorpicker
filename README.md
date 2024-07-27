@@ -13,11 +13,10 @@ To set up the project, you'll need Node.js installed on your machine. Follow the
 2. **Install the necessary dependencies:**
     ```bash
     npm install
-    Start the development server:
 3. **Start the development server:**
     ```bash
     npm run start
-    Open your web browser and navigate to http://localhost:8080 to see the project in action.
+4. **Open your web browser and navigate to http://localhost:8080 to see the project in action.**
 
 ## Usage
 Once the development server is running, you can interact with the color picker by selecting any point on the graphic. The application will display the color information based on the selected pixel.
