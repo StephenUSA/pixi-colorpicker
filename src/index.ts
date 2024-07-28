@@ -18,6 +18,32 @@ const main = async () => {
     document.body.appendChild(app.canvas);
 
     await loadAssets();
+    const selectedColorValue = new PIXI.Text({
+        text: '',
+        style: {
+            fontSize: 24
+        }
+    });
+    const activeColorValue = new PIXI.Text({
+        text: '',
+        style: {
+            fontSize: 16,
+            fill: 'white'
+        }
+    });
+    const activeColorContainer = new PIXI.Container();
+    const activeColorBg = new PIXI.Graphics();
+    activeColorBg.roundRect(0, 0, 80, 20, 8).fill({
+        color: 0x777777,
+        alpha: 1
+    });
+    activeColorContainer.addChildAt(activeColorBg, 0);
+    activeColorContainer.addChildAt(activeColorValue, 1);
+    activeColorValue.position.x = 12;
+    activeColorContainer.position.x = 43;
+    activeColorContainer.position.y = 120;
+    selectedColorValue.position.x = screen.width / 2 - 4;
+    selectedColorValue.position.y = 5;
     const pickerGlassContainer = new PIXI.Container();
     pickerGlassContainer.visible = false;
     const pickerGlass = PIXI.Sprite.from('assets/SelectedColor.png');
@@ -62,6 +88,18 @@ const main = async () => {
     pickerGlassContainer.addChildAt(pickerGlassOverlay, 2);
     pickerGlassContainer.addChildAt(pickerGlassMask, 3);
     pickerGlassContainer.addChildAt(pickerGlass, 4);
+    pickerGlassContainer.addChildAt(activeColorContainer, 5);
+    skyScene.onclick = (e) => {
+        let x = Math.round(e.globalX - skyScene.position.x);
+        let y = Math.round(e.globalY - skyScene.position.y);
+        let w = Math.round(skyScene.width);
+
+        let pixelR = pixels.pixels[4 * (y * w + x)];
+        let pixelG = pixels.pixels[4 * (y * w + x) + 1];
+        let pixelB = pixels.pixels[4 * (y * w + x) + 2];
+        let pixelA = pixels.pixels[4 * (y * w + x) + 3];
+        selectedColorValue.text = new PIXI.Color(new Uint8Array([pixelR, pixelG, pixelB, pixelA])).toHex();
+    }
     skyScene.onmousemove = (e) => {
         let x = Math.round(e.globalX - skyScene.position.x);
         let y = Math.round(e.globalY - skyScene.position.y);
@@ -71,6 +109,7 @@ const main = async () => {
         let pixelG = pixels.pixels[4 * (y * w + x) + 1];
         let pixelB = pixels.pixels[4 * (y * w + x) + 2];
         let pixelA = pixels.pixels[4 * (y * w + x) + 3];
+        activeColorValue.text = new PIXI.Color(new Uint8Array([pixelR, pixelG, pixelB, pixelA])).toHex();
         for (let i = -7; i<=7; i++) {
             for (let j = -7; j<=7; j++) {
                 let pixelR = pixels.pixels[4 * ((y + i) * w + x + j)];
@@ -128,6 +167,7 @@ const main = async () => {
     }
 
     app.stage.addChild(skyScene);
+    app.stage.addChild(selectedColorValue);
     app.stage.addChild(colorPicker);
     app.stage.addChild(pickerGlassContainer);
 }
